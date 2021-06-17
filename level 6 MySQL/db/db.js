@@ -17,3 +17,5 @@ connection.connect((error) => {
 	console.log("Connecting to: ", connection.threadId);
 }
 );
+
+module.exports = connection;

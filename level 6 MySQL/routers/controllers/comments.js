@@ -1,24 +1,26 @@
-const commentsModel = require('./../../db/models/comments');
+const mysql = require("mysql2");
+const connection = require('./../../db/db');
 
 const createNewComment = (req, res) => {
 	const articleId = req.params.id;
-
 	const { comment, commenter } = req.body;
 
-	const newComment = new commentsModel({
-		comment,
-		articleId,
-		commenter,
+	const command = `SELECT id INTO @commenter_id FROM users WHERE lastName="${commenter}";`;
+	connection.query(command, (error, result) => {
+		if (error) {
+			throw error;
+		}
 	});
 
-	newComment
-		.save()
-		.then((result) => {
-			res.status(201).json(result);
-		})
-		.catch((err) => {
-			res.send(err);
-		});
+	const data = [articleId, comment];
+	const query=`INSERT INTO comments (articleId, comment, comment_id) VALUES (?, ?, @commenter_id);`;
+
+	connection.query(query, data, (error, result) => {
+		if (error) {
+			throw error;
+		}
+		res.json(result);
+	});
 };
 
 module.exports = {

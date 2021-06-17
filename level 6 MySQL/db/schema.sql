@@ -1,4 +1,5 @@
-DROP DATABASE MERAKI_Academy_Project_3;
+-- DROP DATABASE MERAKI_Academy_Project_3;
+-- CREATE DATABASE MERAKI_Academy_Project_3;
 USE MERAKI_Academy_Project_3;
 
 CREATE TABLE roles (
